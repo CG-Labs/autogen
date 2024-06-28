@@ -16,5 +16,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Set the PYTHONPATH environment variable
 ENV PYTHONPATH /usr/local/lib/python3.9/site-packages:/app:/app/autogen
 
+# Set the PYTHONUNBUFFERED environment variable to ensure unbuffered output
+ENV PYTHONUNBUFFERED=1
+
 # Keep the container running indefinitely
 CMD ["tail", "-f", "/dev/null"]
