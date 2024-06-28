@@ -24,11 +24,12 @@ class MCTSNode:
 
     def expand(self):
         legal_actions = self.state.get_legal_actions()
+        if not legal_actions:
+            return None
         for action in legal_actions:
             next_state = self.state.move(action)
             if next_state not in [child.state for child in self.children]:
                 child_node = MCTSNode(next_state, parent=self)
-                child_node.visits = 1  # Initialize visits to 1 to avoid division by zero
                 self.children.append(child_node)
                 return child_node
         return None
@@ -38,8 +39,9 @@ class MCTSNode:
         self.value += reward
 
 def mcts(root, iterations):
-    if not root.children:
-        root.expand()  # Ensure the root node is expanded if it has no children
+    legal_actions = root.state.get_legal_actions()
+    if not legal_actions:
+        return None
     for _ in range(iterations):
         node = root
         while node.is_fully_expanded():
