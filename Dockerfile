@@ -22,8 +22,8 @@ EXPOSE 80
 # Define environment variable
 ENV NAME World
 
-# Comment out the PYTHONPATH environment variable
-# ENV PYTHONPATH /usr/local/lib/python3.9/site-packages:/app:/app/autogen
+# Set the PYTHONPATH environment variable
+ENV PYTHONPATH /usr/local/lib/python3.9/site-packages:/app:/app/autogen
 
 # Keep the container running indefinitely
 CMD ["tail", "-f", "/dev/null"]
