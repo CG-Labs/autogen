@@ -1,0 +1,11 @@
+This is the latest business report.
+
+Action List:
+1. Increase sales by 15%.
+2. Reduce operational costs by 7%.
+3. Expand product line.
+
+Status:
+1. Sales increased by 12%.
+2. Operational costs reduced by 6%.
+3. Product line expansion in progress.
