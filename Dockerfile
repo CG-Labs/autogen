@@ -23,7 +23,7 @@ EXPOSE 80
 ENV NAME World
 
 # Set PYTHONPATH environment variable
-ENV PYTHONPATH /usr/local/lib/python3.9/site-packages:/app
+ENV PYTHONPATH /usr/local/lib/python3.9/site-packages:/app:/app/autogen
 
 # Run web_scraping_tool.py when the container launches
 CMD ["python", "/app/coding/web_scraping_tool.py"]
