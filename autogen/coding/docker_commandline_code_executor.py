@@ -109,6 +109,8 @@ class DockerCommandLineCodeExecutor(CodeExecutor):
         elif isinstance(bind_dir, str):
             bind_dir = Path(bind_dir)
 
+        self._bind_dir: Path = bind_dir
+
         client = docker.from_env()
         # Check if the image exists
         try:
