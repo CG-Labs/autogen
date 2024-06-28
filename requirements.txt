@@ -9,3 +9,4 @@ docker
 flaml
 python-dotenv
 packaging
+tiktoken
