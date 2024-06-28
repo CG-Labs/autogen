@@ -240,7 +240,8 @@ class DockerCommandLineCodeExecutor(CodeExecutor):
             logging.info(f"Container status before execution: {self._container.status}")
             logging.info(f"Checking if file {code_path} exists before execution: {code_path.exists()}")
             command = ["timeout", str(self._timeout), _cmd(lang), str(code_path)]
-            result = self._container.exec_run(command)
+            logging.info(f"Executing command: {command} in working directory: {self._work_dir}")
+            result = self._container.exec_run(command, workdir=str(self._work_dir))
             logging.info(f"Container status after execution: {self._container.status}")
             exit_code = result.exit_code
             output = result.output.decode("utf-8")
