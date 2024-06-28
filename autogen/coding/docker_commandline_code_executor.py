@@ -230,6 +230,10 @@ class DockerCommandLineCodeExecutor(CodeExecutor):
                 logging.info(f"File {code_path} exists with permissions {oct(code_path.stat().st_mode)}")
             else:
                 logging.error(f"File {code_path} does not exist after creation")
+
+            # Log the contents of the directory to ensure the file is present
+            logging.info(f"Contents of directory {self._work_dir}: {list(self._work_dir.iterdir())}")
+
             files.append(code_path)
 
             if not execute_code:
