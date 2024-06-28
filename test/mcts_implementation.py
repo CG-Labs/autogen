@@ -74,12 +74,8 @@ class GameState:
         return actions
 
     def _can_execute_task(self, task):
-        # Example logic for task dependencies
-        if task == "task1":
-            return True
-        elif task == "task2":
-            return True
-        elif task not in ["task1", "task2"]:
+        # Generalized logic for task dependencies
+        if task in self.task_status and self.task_status[task] == "pending":
             return True
         return False
 
@@ -96,13 +92,14 @@ class GameState:
     def simulate(self):
         if self.current_task_index < len(self.task_list):
             task = self.task_list[self.current_task_index]
-            # Example logic for task rewards based on complexity or priority
-            if task == "task1":
-                return random.uniform(0.7, 0.9)
-            elif task == "task2":
-                return random.uniform(0.2, 0.4)
-            else:
-                return random.uniform(0.4, 0.6)
+            # Refined logic for task rewards based on complexity, priority, and estimated time
+            task_complexity = {"task1": 0.9, "task2": 0.4, "task3": 0.6}
+            task_priority = {"task1": 0.8, "task2": 0.3, "task3": 0.5}
+            task_time = {"task1": 0.7, "task2": 0.2, "task3": 0.4}
+            complexity_reward = task_complexity.get(task, 0.5)
+            priority_reward = task_priority.get(task, 0.5)
+            time_reward = task_time.get(task, 0.5)
+            return random.uniform(0.4, 0.6) * complexity_reward * priority_reward * time_reward
         else:
             return 0.0
 
