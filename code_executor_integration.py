@@ -52,7 +52,7 @@ if __name__ == "__main__":
 def execute_document_comparison_tool(file1, file2):
     code_block = f"""
 import os
-from test.document_comparison_tool import compare_documents
+from document_comparison_tool import compare_documents
 
 file1 = "{file1}"
 file2 = "{file2}"
