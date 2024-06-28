@@ -10,6 +10,9 @@ WORKDIR /app
 # Copy the current directory contents into the container at /app
 COPY . /app
 
+# Create the /app/coding directory and copy the code_executor_integration.py script into it
+RUN mkdir -p /app/coding && cp /app/code_executor_integration.py /app/coding/
+
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
