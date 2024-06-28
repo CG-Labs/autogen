@@ -8,3 +8,4 @@ diskcache
 docker
 flaml
 python-dotenv
+packaging
