@@ -110,6 +110,11 @@ class DockerCommandLineCodeExecutor(CodeExecutor):
             bind_dir = Path(bind_dir)
 
         self._bind_dir: Path = bind_dir
+        self._work_dir: Path = work_dir
+        self._timeout = timeout
+        self.execution_policies = self.DEFAULT_EXECUTION_POLICY.copy()
+        if execution_policies is not None:
+            self.execution_policies.update(execution_policies)
 
         client = docker.from_env()
         # Check if the image exists
@@ -153,13 +158,6 @@ class DockerCommandLineCodeExecutor(CodeExecutor):
         # Check if the container is running
         if self._container.status != "running":
             raise ValueError(f"Failed to start container from image {image}. Logs: {self._container.logs()}")
-
-        self._timeout = timeout
-        self._work_dir: Path = work_dir
-        self._bind_dir: Path = bind_dir
-        self.execution_policies = self.DEFAULT_EXECUTION_POLICY.copy()
-        if execution_policies is not None:
-            self.execution_policies.update(execution_policies)
 
     @property
     def timeout(self) -> int:
