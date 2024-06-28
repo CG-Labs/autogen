@@ -220,6 +220,23 @@ Please find more [code examples](https://microsoft.github.io/autogen/docs/Exampl
   </a>
 </p>
 
+## New Features and Enhancements
+
+### Document Comparison Tool
+The document comparison tool includes functions to read PDF, DOCX, and text files, extract key points from the text, compare documents, and generate a report based on the comparison. The tool has been tested with sample text files `sample1.txt` and `sample2.txt`.
+
+### MCTS Implementation Enhancements
+The MCTS implementation has been enhanced by introducing variability in the `simulate` method to provide a range of possible outcomes for each task, making the simulation more realistic. The enhancements ensure that the algorithm handles the variability effectively and converges to reasonable solutions.
+
+### Web Scraping Tool
+A basic web scraping tool has been added, which can fetch web pages, parse HTML content, and extract information such as the title of the web page. A Dockerfile has been created to set up a Docker container for the web scraping tool, ensuring a consistent and isolated environment for its execution.
+
+<p align="right" style="font-size: 14px; color: #555; margin-top: 20px;">
+  <a href="#readme-top" style="text-decoration: none; color: blue; font-weight: bold;">
+    ↑ Back to Top ↑
+  </a>
+</p>
+
 ## Documentation
 
 You can find detailed documentation about AutoGen [here](https://microsoft.github.io/autogen/).
@@ -326,7 +343,6 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
     ↑ Back to Top ↑
   </a>
 </p>
-
 # Legal Notices
 
 Microsoft and any contributors grant you a license to the Microsoft documentation and other content
