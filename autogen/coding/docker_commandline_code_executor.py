@@ -58,7 +58,7 @@ class DockerCommandLineCodeExecutor(CodeExecutor):
         image: str = "python:3-slim",
         container_name: Optional[str] = None,
         timeout: int = 60,
-        work_dir: Union[Path, str] = Path("."),
+        work_dir: Union[Path, str] = Path("/app/coding"),
         bind_dir: Optional[Union[Path, str]] = None,
         auto_remove: bool = True,
         stop_container: bool = True,
@@ -98,10 +98,12 @@ class DockerCommandLineCodeExecutor(CodeExecutor):
         if timeout < 1:
             raise ValueError("Timeout must be greater than or equal to 1.")
 
+        # Ensure work_dir is set to /app/coding
         if isinstance(work_dir, str):
             work_dir = Path(work_dir)
         work_dir.mkdir(exist_ok=True)
 
+        # Ensure bind_dir is set to the same path as work_dir
         if bind_dir is None:
             bind_dir = work_dir
         elif isinstance(bind_dir, str):
