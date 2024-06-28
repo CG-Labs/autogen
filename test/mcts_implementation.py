@@ -47,11 +47,11 @@ class GameState:
     def __init__(self, task_list):
         self.task_list = task_list
         self.current_task_index = 0
+        self.task_status = {task: "pending" for task in task_list}
 
     def get_legal_actions(self):
         # Return a list of possible actions (e.g., next task to perform)
         if self.current_task_index < len(self.task_list):
-            # Example of more complex decision-making process
             actions = []
             for i in range(self.current_task_index, len(self.task_list)):
                 if self.task_list[i] == "task1" and "task2" not in self.task_list[:i]:
@@ -67,6 +67,8 @@ class GameState:
         # Move to the next task in the list
         new_state = GameState(self.task_list)
         new_state.current_task_index = self.current_task_index + 1
+        new_state.task_status = self.task_status.copy()
+        new_state.task_status[action] = "completed"
         return new_state
 
     def is_terminal(self):
@@ -75,15 +77,14 @@ class GameState:
 
     def simulate(self):
         # Simulate the outcome of performing the current task
-        # For simplicity, return a random reward
         task = self.task_list[self.current_task_index]
         # Simulate task outcome based on task type or other criteria
         if task == "task1":
-            return random.uniform(0.5, 1)  # Higher reward for task1
+            return 0.8  # Higher reward for task1
         elif task == "task2":
-            return random.uniform(0, 0.5)  # Lower reward for task2
+            return 0.3  # Lower reward for task2
         else:
-            return random.uniform(0, 1)  # Default random reward
+            return 0.5  # Default reward for other tasks
 
 # Example usage:
 # initial_state = GameState(["task1", "task2", "task3"])
