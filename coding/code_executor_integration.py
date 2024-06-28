@@ -53,9 +53,7 @@ if __name__ == "__main__":
     info = extract_information(soup)
     print(info)
 """
-    logging.info(f"Executing web scraping tool for URL: {url}")
     result = executor.execute_code_blocks([CodeBlock(language="python", code=code_block, work_dir=str(work_dir))])
-    logging.info(f"Web scraping tool execution result: {result}")
     return result
 
 # Example function to execute the document comparison tool
@@ -77,9 +75,7 @@ if __name__ == "__main__":
     else:
         print("One or both files do not exist.")
 """
-    logging.info(f"Executing document comparison tool for files: {file1}, {file2}")
     result = executor.execute_code_blocks([CodeBlock(language="python", code=code_block, work_dir=str(work_dir))])
-    logging.info(f"Document comparison tool execution result: {result}")
     return result
 
 # Example usage
