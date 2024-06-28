@@ -1,5 +1,5 @@
 # Use the official Python image from the Docker Hub
-FROM python:3.9-slim
+FROM python:3.9
 
 # Install git
 RUN apt-get update && apt-get install -y git
@@ -22,8 +22,8 @@ EXPOSE 80
 # Define environment variable
 ENV NAME World
 
-# Set PYTHONPATH environment variable
-ENV PYTHONPATH /usr/local/lib/python3.9/site-packages:/app:/app/autogen
+# Comment out the PYTHONPATH environment variable
+# ENV PYTHONPATH /usr/local/lib/python3.9/site-packages:/app:/app/autogen
 
-# Run web_scraping_tool.py when the container launches
-CMD ["python", "/app/coding/web_scraping_tool.py"]
+# Keep the container running indefinitely
+CMD ["tail", "-f", "/dev/null"]
