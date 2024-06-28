@@ -3,3 +3,4 @@ beautifulsoup4
 nltk
 PyPDF2
 python-docx
+openai
