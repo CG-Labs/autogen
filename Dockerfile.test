@@ -1,0 +1,11 @@
+# Use the official Python image from the Docker Hub
+FROM python:3.9-slim
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy a simple Python script that uses the 'open' function
+COPY test_open.py /app/
+
+# Run the test script when the container launches
+CMD ["python", "test_open.py"]
