@@ -1,5 +1,6 @@
 import os
 from autogen import AssistantAgent, UserProxyAgent, config_list_from_json
+from mcts_implementation import MCTSNode, mcts, GameState
 
 # Set the OAI_CONFIG_LIST environment variable directly in the script
 os.environ['OAI_CONFIG_LIST'] = os.path.join(os.path.dirname(__file__), 'agentchat/contrib/example_agent_builder_library.json')
@@ -16,4 +17,18 @@ user_proxy = UserProxyAgent(
 # Correct the model parameter to be a single string
 assistant.llm_config["model"] = "gpt-4"
 
+# Example usage of MCTS within the AutoGen framework
+def mcts_agent_task():
+    initial_state = GameState(["task1", "task2", "task3"])
+    root = MCTSNode(initial_state)
+    best_action_node = mcts(root, 1000)
+    if best_action_node:
+        best_action = best_action_node.state
+        return f"Best action determined by MCTS: {best_action}"
+    else:
+        return "No valid action found by MCTS."
+
+# Initiate chat between agents and include MCTS task
 user_proxy.initiate_chat(assistant, message="Plot a chart of NVDA and TESLA stock price change YTD.")
+mcts_result = mcts_agent_task()
+print(mcts_result)
