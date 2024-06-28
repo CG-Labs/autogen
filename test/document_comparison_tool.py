@@ -59,8 +59,8 @@ def generate_report(comparison_result):
 
 # Example usage
 if __name__ == "__main__":
-    doc1_text = read_txt("sample1.txt")
-    doc2_text = read_txt("sample2.txt")
+    doc1_text = read_txt("/app/test/sample1.txt")
+    doc2_text = read_txt("/app/test/sample2.txt")
 
     comparison_result = compare_documents(doc1_text, doc2_text)
     report = generate_report(comparison_result)
