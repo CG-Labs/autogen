@@ -128,8 +128,8 @@ class DockerCommandLineCodeExecutor(CodeExecutor):
             entrypoint="/bin/sh",
             tty=True,
             auto_remove=auto_remove,
-            volumes={str(bind_dir.resolve()): {"bind": "/app/coding", "mode": "rw"}},
-            working_dir="/app/coding",
+            volumes={str(self._bind_dir.resolve()): {"bind": str(self._work_dir), "mode": "rw"}},
+            working_dir=str(self._work_dir),
         )
         self._container.start()
 
