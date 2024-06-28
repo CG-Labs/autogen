@@ -215,7 +215,9 @@ class DockerCommandLineCodeExecutor(CodeExecutor):
 
             code_path = self._work_dir / filename
             with code_path.open("w", encoding="utf-8") as fout:
+                logging.info(f"Creating temporary file at {code_path}")
                 fout.write(code)
+            logging.info(f"Temporary file created at {code_path}")
             files.append(code_path)
 
             if not execute_code:
