@@ -80,11 +80,11 @@ class GameState:
         task = self.task_list[self.current_task_index]
         # Simulate task outcome based on task type or other criteria
         if task == "task1":
-            return 0.8  # Higher reward for task1
+            return random.uniform(0.7, 0.9)  # Higher reward for task1 with some variability
         elif task == "task2":
-            return 0.3  # Lower reward for task2
+            return random.uniform(0.2, 0.4)  # Lower reward for task2 with some variability
         else:
-            return 0.5  # Default reward for other tasks
+            return random.uniform(0.4, 0.6)  # Default reward for other tasks with some variability
 
 # Example usage:
 # initial_state = GameState(["task1", "task2", "task3"])
