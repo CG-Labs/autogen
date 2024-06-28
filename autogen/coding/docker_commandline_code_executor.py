@@ -237,8 +237,11 @@ class DockerCommandLineCodeExecutor(CodeExecutor):
                 continue
 
             logging.info(f"Executing temporary file at {code_path}")
+            logging.info(f"Container status before execution: {self._container.status}")
+            logging.info(f"Checking if file {code_path} exists before execution: {code_path.exists()}")
             command = ["timeout", str(self._timeout), _cmd(lang), str(code_path)]
             result = self._container.exec_run(command)
+            logging.info(f"Container status after execution: {self._container.status}")
             exit_code = result.exit_code
             output = result.output.decode("utf-8")
             logging.info(f"Execution completed for file at {code_path} with exit code {exit_code}")
