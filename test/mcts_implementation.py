@@ -51,7 +51,16 @@ class GameState:
     def get_legal_actions(self):
         # Return a list of possible actions (e.g., next task to perform)
         if self.current_task_index < len(self.task_list):
-            return [self.task_list[self.current_task_index]]
+            # Example of more complex decision-making process
+            actions = []
+            for i in range(self.current_task_index, len(self.task_list)):
+                if self.task_list[i] == "task1" and "task2" not in self.task_list[:i]:
+                    actions.append(self.task_list[i])
+                elif self.task_list[i] == "task2" and "task1" in self.task_list[:i]:
+                    actions.append(self.task_list[i])
+                else:
+                    actions.append(self.task_list[i])
+            return actions
         return []
 
     def move(self, action):
