@@ -1,6 +1,11 @@
+import sys
+import logging
 from pathlib import Path
 from autogen import ConversableAgent
 from autogen.coding import DockerCommandLineCodeExecutor, CodeBlock
+
+# Configure logging to output to the console
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Define the working directory for the executor
 work_dir = Path("/app/coding")
