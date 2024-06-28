@@ -7,3 +7,4 @@ openai
 diskcache
 docker
 flaml
+python-dotenv
