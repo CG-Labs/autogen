@@ -31,8 +31,7 @@ class MCTSNode:
             if next_state not in [child.state for child in self.children]:
                 child_node = MCTSNode(next_state, parent=self)
                 self.children.append(child_node)
-                return child_node
-        return None
+        return None if not self.children else None
 
     def update(self, reward):
         self.visits += 1
@@ -72,7 +71,7 @@ class GameState:
                 actions.append(self.task_list[i])
             elif self.task_list[i] == "task2" and "task1" in self.task_list[:i]:
                 actions.append(self.task_list[i])
-            else:
+            elif self.task_list[i] not in ["task1", "task2"]:
                 actions.append(self.task_list[i])
         return actions
 

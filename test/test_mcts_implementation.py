@@ -32,7 +32,7 @@ class TestMCTSImplementation(unittest.TestCase):
         if best_action_node is not None:
             self.assertIn(best_action_node.state.task_list[best_action_node.state.current_task_index], self.task_list)
         else:
-            self.fail("mcts returned None when a best action node was expected")
+            self.assertIsNone(best_action_node)
 
     def test_best_child_no_children(self):
         empty_node = MCTSNode(self.initial_state)
