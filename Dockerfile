@@ -10,8 +10,8 @@ WORKDIR /app
 # Copy the current directory contents into the container at /app
 COPY . /app
 
-# Create the /app/coding directory and copy the code_executor_integration.py script into it
-RUN mkdir -p /app/coding && cp /app/code_executor_integration.py /app/coding/
+# Create the /app/coding directory and copy the code_executor_integration.py and web_scraping_tool.py scripts into it
+RUN mkdir -p /app/coding && cp /app/code_executor_integration.py /app/coding/ && cp /app/web_scraping_tool.py /app/coding/
 
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
@@ -23,7 +23,7 @@ EXPOSE 80
 ENV NAME World
 
 # Set PYTHONPATH environment variable
-ENV PYTHONPATH /usr/local/lib/python3.9/site-packages
+ENV PYTHONPATH /usr/local/lib/python3.9/site-packages:/app
 
 # Run web_scraping_tool.py when the container launches
-CMD ["python", "web_scraping_tool.py"]
+CMD ["python", "/app/coding/web_scraping_tool.py"]
