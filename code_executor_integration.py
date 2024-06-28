@@ -45,7 +45,7 @@ if __name__ == "__main__":
     info = extract_information(soup)
     print(info)
 """
-    result = executor.execute_code_blocks([CodeBlock(language="python", code=code_block)])
+    result = executor.execute_code_blocks([CodeBlock(language="python", code=code_block, work_dir=str(work_dir))])
     return result
 
 # Example function to execute the document comparison tool
@@ -64,7 +64,7 @@ if __name__ == "__main__":
     else:
         print("One or both files do not exist.")
 """
-    result = executor.execute_code_blocks([CodeBlock(language="python", code=code_block)])
+    result = executor.execute_code_blocks([CodeBlock(language="python", code=code_block, work_dir=str(work_dir))])
     return result
 
 # Example usage
