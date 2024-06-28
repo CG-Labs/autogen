@@ -54,6 +54,9 @@ class IOStream(InputStream, OutputStream, Protocol):
         Args:
             stream (IOStream): The input/output stream to set as the default.
         """
+        # Ensure standard streams are initialized before setting custom I/O streams
+        if not hasattr(__builtins__, 'open'):
+            raise RuntimeError("Standard streams are not initialized")
         IOStream._global_default = stream
 
     @staticmethod
