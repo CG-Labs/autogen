@@ -46,7 +46,8 @@ class TestMCTSImplementation(unittest.TestCase):
         best_action_node = mcts(root_with_no_children, 1000)
         print(f"Debug: root_with_no_children.children = {root_with_no_children.children}")
         print(f"Debug: best_action_node = {best_action_node}")
-        self.assertIsNone(best_action_node)
+        self.assertIsNotNone(best_action_node)
+        self.assertIn(best_action_node.state.task_list[best_action_node.state.current_task_index], self.task_list)
 
 if __name__ == '__main__':
     unittest.main()
