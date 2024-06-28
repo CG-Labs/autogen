@@ -3,7 +3,7 @@ from autogen import ConversableAgent
 from autogen.coding import DockerCommandLineCodeExecutor, CodeBlock
 
 # Define the working directory for the executor
-work_dir = Path("coding")
+work_dir = Path("/app/coding")
 work_dir.mkdir(exist_ok=True)
 
 # Instantiate the DockerCommandLineCodeExecutor
@@ -74,5 +74,5 @@ if __name__ == "__main__":
     print("Web Scraping Result:", web_scraping_result)
 
     # Execute the document comparison tool
-    document_comparison_result = execute_document_comparison_tool("sample1.txt", "sample2.txt")
+    document_comparison_result = execute_document_comparison_tool("/app/sample1.txt", "/app/sample2.txt")
     print("Document Comparison Result:", document_comparison_result)
