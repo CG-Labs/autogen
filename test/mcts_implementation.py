@@ -50,21 +50,19 @@ class GameState:
         self.task_status = {task: "pending" for task in task_list}
 
     def get_legal_actions(self):
-        # Return a list of possible actions (e.g., next task to perform)
-        if self.current_task_index < len(self.task_list):
-            actions = []
-            for i in range(self.current_task_index, len(self.task_list)):
-                if self.task_list[i] == "task1" and "task2" not in self.task_list[:i]:
-                    actions.append(self.task_list[i])
-                elif self.task_list[i] == "task2" and "task1" in self.task_list[:i]:
-                    actions.append(self.task_list[i])
-                else:
-                    actions.append(self.task_list[i])
-            return actions
-        return []
+        # Generalize to handle a dynamic range of task dependencies
+        actions = []
+        for i in range(self.current_task_index, len(self.task_list)):
+            if self.task_list[i] == "task1" and "task2" not in self.task_list[:i]:
+                actions.append(self.task_list[i])
+            elif self.task_list[i] == "task2" and "task1" in self.task_list[:i]:
+                actions.append(self.task_list[i])
+            else:
+                actions.append(self.task_list[i])
+        return actions
 
     def move(self, action):
-        # Move to the next task in the list
+        # Reflect state transitions for actions with multiple effects or outcomes
         new_state = GameState(self.task_list)
         new_state.current_task_index = self.current_task_index + 1
         new_state.task_status = self.task_status.copy()
@@ -72,13 +70,12 @@ class GameState:
         return new_state
 
     def is_terminal(self):
-        # Determine if all tasks have been completed
+        # Account for more complex conditions that define a terminal state
         return self.current_task_index >= len(self.task_list)
 
     def simulate(self):
-        # Simulate the outcome of performing the current task
+        # Incorporate more detailed criteria for simulation
         task = self.task_list[self.current_task_index]
-        # Simulate task outcome based on task type or other criteria
         if task == "task1":
             return random.uniform(0.7, 0.9)  # Higher reward for task1 with some variability
         elif task == "task2":
