@@ -214,8 +214,8 @@ class DockerCommandLineCodeExecutor(CodeExecutor):
                 filename = f"tmp_code_{md5(code.encode()).hexdigest()}.{lang}"
 
             code_path = self._work_dir / filename
+            logging.info(f"Creating temporary file at {code_path}")
             with code_path.open("w", encoding="utf-8") as fout:
-                logging.info(f"Creating temporary file at {code_path}")
                 fout.write(code)
             logging.info(f"Temporary file created at {code_path}")
             files.append(code_path)
@@ -224,10 +224,12 @@ class DockerCommandLineCodeExecutor(CodeExecutor):
                 outputs.append(f"Code saved to {str(code_path)}\n")
                 continue
 
+            logging.info(f"Executing temporary file at {code_path}")
             command = ["timeout", str(self._timeout), _cmd(lang), str(code_path)]
             result = self._container.exec_run(command)
             exit_code = result.exit_code
             output = result.output.decode("utf-8")
+            logging.info(f"Execution completed for file at {code_path} with exit code {exit_code}")
             if exit_code == 124:
                 output += "\n" + TIMEOUT_MSG
             outputs.append(output)
