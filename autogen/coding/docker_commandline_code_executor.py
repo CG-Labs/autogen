@@ -222,7 +222,7 @@ class DockerCommandLineCodeExecutor(CodeExecutor):
                 outputs.append(f"Code saved to {str(code_path)}\n")
                 continue
 
-            command = ["timeout", str(self._timeout), _cmd(lang), filename]
+            command = ["timeout", str(self._timeout), _cmd(lang), str(code_path)]
             result = self._container.exec_run(command)
             exit_code = result.exit_code
             output = result.output.decode("utf-8")
