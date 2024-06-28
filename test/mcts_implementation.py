@@ -44,22 +44,32 @@ def mcts(root, iterations):
     return root.best_child(c_param=0)
 
 class GameState:
+    def __init__(self, task_list):
+        self.task_list = task_list
+        self.current_task_index = 0
+
     def get_legal_actions(self):
-        # Placeholder implementation: Return a list of dummy actions
-        return ["action1", "action2", "action3"]
+        # Return a list of possible actions (e.g., next task to perform)
+        if self.current_task_index < len(self.task_list):
+            return [self.task_list[self.current_task_index]]
+        return []
 
     def move(self, action):
-        # Placeholder implementation: Return a new GameState instance
-        return GameState()
+        # Move to the next task in the list
+        new_state = GameState(self.task_list)
+        new_state.current_task_index = self.current_task_index + 1
+        return new_state
 
     def is_terminal(self):
-        # Placeholder implementation: Randomly determine if the state is terminal
-        return random.choice([True, False])
+        # Determine if all tasks have been completed
+        return self.current_task_index >= len(self.task_list)
 
     def simulate(self):
-        # Placeholder implementation: Return a random reward
+        # Simulate the outcome of performing the current task
+        # For simplicity, return a random reward
         return random.uniform(0, 1)
 
 # Example usage:
+# initial_state = GameState(["task1", "task2", "task3"])
 # root = MCTSNode(initial_state)
 # best_action = mcts(root, 1000).state
