@@ -220,7 +220,10 @@ class DockerCommandLineCodeExecutor(CodeExecutor):
             with code_path.open("w", encoding="utf-8") as fout:
                 fout.write(code)
             logging.info(f"Temporary file created at {code_path}")
-            files.append(code_path)
+
+            # Change file permissions to be executable
+            code_path.chmod(0o755)
+            logging.info(f"Changed permissions for {code_path} to {oct(code_path.stat().st_mode)}")
 
             # Check if the file exists and log its permissions
             if code_path.exists():
