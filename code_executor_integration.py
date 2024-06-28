@@ -22,6 +22,9 @@ code_executor_agent = ConversableAgent(
 # Example function to execute the web scraping tool
 def execute_web_scraping_tool(url):
     code_block = f"""
+import sys
+sys.path.append('/usr/local/lib/python3.9/site-packages')
+
 import requests
 from bs4 import BeautifulSoup
 
@@ -51,6 +54,9 @@ if __name__ == "__main__":
 # Example function to execute the document comparison tool
 def execute_document_comparison_tool(file1, file2):
     code_block = f"""
+import sys
+sys.path.append('/usr/local/lib/python3.9/site-packages')
+
 import os
 from document_comparison_tool import compare_documents
 
