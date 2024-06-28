@@ -222,6 +222,13 @@ class DockerCommandLineCodeExecutor(CodeExecutor):
             logging.info(f"Temporary file created at {code_path}")
             files.append(code_path)
 
+            # Check if the file exists and log its permissions
+            if code_path.exists():
+                logging.info(f"File {code_path} exists with permissions {oct(code_path.stat().st_mode)}")
+            else:
+                logging.error(f"File {code_path} does not exist after creation")
+            files.append(code_path)
+
             if not execute_code:
                 outputs.append(f"Code saved to {str(code_path)}\n")
                 continue
