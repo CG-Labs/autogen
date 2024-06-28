@@ -54,7 +54,8 @@ class IOStream(InputStream, OutputStream, Protocol):
         Args:
             stream (IOStream): The input/output stream to set as the default.
         """
-        IOStream._global_default = stream
+        # IOStream._global_default = stream
+        pass
 
     @staticmethod
     def get_global_default() -> "IOStream":
