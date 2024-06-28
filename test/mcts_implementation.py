@@ -31,20 +31,21 @@ class MCTSNode:
             if next_state not in [child.state for child in self.children]:
                 child_node = MCTSNode(next_state, parent=self)
                 self.children.append(child_node)
-        return None if not self.children else None
+                return child_node
+        return None
 
     def update(self, reward):
         self.visits += 1
         self.value += reward
 
-def mcts(root, iterations):
+def mcts(root, iterations, c_param=1.4):
     legal_actions = root.state.get_legal_actions()
     if not legal_actions:
         return None
     for _ in range(iterations):
         node = root
         while node.is_fully_expanded():
-            node = node.best_child()
+            node = node.best_child(c_param)
             if node is None:
                 break
         if node is not None and not node.state.is_terminal():
@@ -67,13 +68,20 @@ class GameState:
     def get_legal_actions(self):
         actions = []
         for i in range(self.current_task_index, len(self.task_list)):
-            if self.task_list[i] == "task1" and "task2" not in self.task_list[:i]:
-                actions.append(self.task_list[i])
-            elif self.task_list[i] == "task2" and "task1" in self.task_list[:i]:
-                actions.append(self.task_list[i])
-            elif self.task_list[i] not in ["task1", "task2"]:
-                actions.append(self.task_list[i])
+            task = self.task_list[i]
+            if self._can_execute_task(task):
+                actions.append(task)
         return actions
+
+    def _can_execute_task(self, task):
+        # Example logic for task dependencies
+        if task == "task1":
+            return True
+        elif task == "task2":
+            return True
+        elif task not in ["task1", "task2"]:
+            return True
+        return False
 
     def move(self, action):
         new_state = GameState(self.task_list)
@@ -88,6 +96,7 @@ class GameState:
     def simulate(self):
         if self.current_task_index < len(self.task_list):
             task = self.task_list[self.current_task_index]
+            # Example logic for task rewards based on complexity or priority
             if task == "task1":
                 return random.uniform(0.7, 0.9)
             elif task == "task2":
