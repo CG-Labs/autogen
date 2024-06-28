@@ -80,5 +80,5 @@ if __name__ == "__main__":
     print("Web Scraping Result:", web_scraping_result)
 
     # Execute the document comparison tool
-    document_comparison_result = execute_document_comparison_tool("/app/sample1.txt", "/app/sample2.txt")
+    document_comparison_result = execute_document_comparison_tool("/app/coding/sample1.txt", "/app/coding/sample2.txt")
     print("Document Comparison Result:", document_comparison_result)

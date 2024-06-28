@@ -19,5 +19,8 @@ EXPOSE 80
 # Define environment variable
 ENV NAME World
 
+# Set PYTHONPATH environment variable
+ENV PYTHONPATH /usr/local/lib/python3.9/site-packages
+
 # Run web_scraping_tool.py when the container launches
 CMD ["python", "web_scraping_tool.py"]
