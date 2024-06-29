@@ -54,6 +54,7 @@ class IOStream(InputStream, OutputStream, Protocol):
         Args:
             stream (IOStream): The input/output stream to set as the default.
         """
+        # Removing the check for standard streams initialization
         IOStream._global_default = stream
 
     @staticmethod

@@ -1,0 +1,11 @@
+This is a sample business report from months ago.
+
+Action List:
+1. Increase sales by 10%.
+2. Reduce operational costs by 5%.
+3. Launch new marketing campaign.
+
+Status:
+1. Sales increased by 8%.
+2. Operational costs reduced by 3%.
+3. Marketing campaign launched successfully.

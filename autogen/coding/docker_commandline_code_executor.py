@@ -58,7 +58,7 @@ class DockerCommandLineCodeExecutor(CodeExecutor):
         image: str = "python:3-slim",
         container_name: Optional[str] = None,
         timeout: int = 60,
-        work_dir: Union[Path, str] = Path("."),
+        work_dir: Union[Path, str] = Path("/app/coding"),
         bind_dir: Optional[Union[Path, str]] = None,
         auto_remove: bool = True,
         stop_container: bool = True,
@@ -98,14 +98,23 @@ class DockerCommandLineCodeExecutor(CodeExecutor):
         if timeout < 1:
             raise ValueError("Timeout must be greater than or equal to 1.")
 
+        # Ensure work_dir is set to /app/coding
         if isinstance(work_dir, str):
             work_dir = Path(work_dir)
         work_dir.mkdir(exist_ok=True)
 
+        # Ensure bind_dir is set to the same path as work_dir
         if bind_dir is None:
             bind_dir = work_dir
         elif isinstance(bind_dir, str):
             bind_dir = Path(bind_dir)
+
+        self._bind_dir: Path = bind_dir
+        self._work_dir: Path = work_dir
+        self._timeout = timeout
+        self.execution_policies = self.DEFAULT_EXECUTION_POLICY.copy()
+        if execution_policies is not None:
+            self.execution_policies.update(execution_policies)
 
         client = docker.from_env()
         # Check if the image exists
@@ -126,8 +135,8 @@ class DockerCommandLineCodeExecutor(CodeExecutor):
             entrypoint="/bin/sh",
             tty=True,
             auto_remove=auto_remove,
-            volumes={str(bind_dir.resolve()): {"bind": "/workspace", "mode": "rw"}},
-            working_dir="/workspace",
+            volumes={str(self._bind_dir.resolve()): {"bind": str(self._work_dir), "mode": "rw"}},
+            working_dir=str(self._work_dir),
         )
         self._container.start()
 
@@ -149,13 +158,6 @@ class DockerCommandLineCodeExecutor(CodeExecutor):
         # Check if the container is running
         if self._container.status != "running":
             raise ValueError(f"Failed to start container from image {image}. Logs: {self._container.logs()}")
-
-        self._timeout = timeout
-        self._work_dir: Path = work_dir
-        self._bind_dir: Path = bind_dir
-        self.execution_policies = self.DEFAULT_EXECUTION_POLICY.copy()
-        if execution_policies is not None:
-            self.execution_policies.update(execution_policies)
 
     @property
     def timeout(self) -> int:
@@ -214,18 +216,40 @@ class DockerCommandLineCodeExecutor(CodeExecutor):
                 filename = f"tmp_code_{md5(code.encode()).hexdigest()}.{lang}"
 
             code_path = self._work_dir / filename
+            logging.info(f"Creating temporary file at {code_path}")
             with code_path.open("w", encoding="utf-8") as fout:
                 fout.write(code)
+            logging.info(f"Temporary file created at {code_path}")
+
+            # Change file permissions to be executable
+            code_path.chmod(0o755)
+            logging.info(f"Changed permissions for {code_path} to {oct(code_path.stat().st_mode)}")
+
+            # Check if the file exists and log its permissions
+            if code_path.exists():
+                logging.info(f"File {code_path} exists with permissions {oct(code_path.stat().st_mode)}")
+            else:
+                logging.error(f"File {code_path} does not exist after creation")
+
+            # Log the contents of the directory to ensure the file is present
+            logging.info(f"Contents of directory {self._work_dir}: {list(self._work_dir.iterdir())}")
+
             files.append(code_path)
 
             if not execute_code:
                 outputs.append(f"Code saved to {str(code_path)}\n")
                 continue
 
-            command = ["timeout", str(self._timeout), _cmd(lang), filename]
-            result = self._container.exec_run(command)
+            logging.info(f"Executing temporary file at {code_path}")
+            logging.info(f"Container status before execution: {self._container.status}")
+            logging.info(f"Checking if file {code_path} exists before execution: {code_path.exists()}")
+            command = ["timeout", str(self._timeout), _cmd(lang), str(code_path)]
+            logging.info(f"Executing command: {command} in working directory: {self._work_dir}")
+            result = self._container.exec_run(command, workdir=str(self._work_dir))
+            logging.info(f"Container status after execution: {self._container.status}")
             exit_code = result.exit_code
             output = result.output.decode("utf-8")
+            logging.info(f"Execution completed for file at {code_path} with exit code {exit_code}")
             if exit_code == 124:
                 output += "\n" + TIMEOUT_MSG
             outputs.append(output)

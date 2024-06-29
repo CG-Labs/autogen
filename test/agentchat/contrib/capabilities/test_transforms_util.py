@@ -6,7 +6,7 @@ import pytest
 
 from autogen.agentchat.contrib.capabilities import transforms_util
 from autogen.cache.cache import Cache
-from autogen.types import MessageContentType
+from autogen.autogen_types import MessageContentType
 
 MESSAGES = {
     "message1": {

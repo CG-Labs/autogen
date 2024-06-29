@@ -2,16 +2,14 @@
 license_file = "LICENSE"
 description-file = "README.md"
 
-
 [tool.pytest.ini_options]
-addopts = '--cov=. --cov-append --cov-branch --cov-report=xml -m "not conda"'
+addopts = '-m "not conda"'
 markers = ["conda: test related to conda forge distribution"]
 
 [tool.black]
 # https://github.com/psf/black
 line-length = 120
 exclude = "(.eggs|.git|.hg|.mypy_cache|.venv|_build|buck-out|build|dist)"
-
 
 [tool.ruff]
 line-length = 120
