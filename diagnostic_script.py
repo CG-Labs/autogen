@@ -1,5 +1,4 @@
 try:
-    from builtins import open
     print("Import successful.")
 except ImportError as e:
     print(f"ImportError: {e}")
